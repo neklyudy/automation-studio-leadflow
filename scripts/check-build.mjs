@@ -1,6 +1,14 @@
 import fs from "node:fs/promises";
 import assert from "node:assert/strict";
-import { youtubeId } from "../.ssr/entry-server.js";
+import { youtubeId, calculateDemo } from "../.ssr/entry-server.js";
+const example = { service: "general", area: 60, windows: 2, oven: true, fridge: false, urgent: true };
+assert.deepEqual(calculateDemo(example), { base: 3600, extras: 750, urgency: 1087.5, total: 5437.5 });
+assert.equal(calculateDemo({ ...example, service: "regular", area: 10, windows: 0, oven: false, urgent: false }).total, 1000);
+assert.equal(calculateDemo({ ...example, service: "renovation", area: 10, windows: 0, oven: false, urgent: false }).total, 2500);
+assert.equal(calculateDemo({ ...example, area: 30.1, windows: 0, oven: false, fridge: true, urgent: false }).total, 2106);
+assert.equal(calculateDemo({ ...example, area: 60, windows: 0, oven: false, urgent: false }).total, 3600);
+for (const invalid of [{ area: NaN }, { area: -1 }, { area: 1001 }, { windows: 1.5 }, { windows: Infinity }, { windows: -1 }, { service: "missing" }]) assert.throws(() => calculateDemo({ ...example, ...invalid }));
+console.log("Demo pricing: 5 reference cases and 7 invalid inputs passed");
 const prefix = process.env.VITE_BASE_PATH || "/";
 const pages = process.env.GITHUB_PAGES === "true";
 for (const [file, heading] of [["dist/index.html", "Допомагаю бізнесу"], [pages ? "dist/projects/leadflow/index.html" : "dist/projects/leadflow.html", "LeadFlow"]]) {

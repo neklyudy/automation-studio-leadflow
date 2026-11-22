@@ -92,3 +92,9 @@ viewport capability та URL preview. Перевіряються 14 комбін
 
 JSON-протоколи проведених браузерних перевірок: `reports/browser-smoke.json`,
 `reports/browser-final.json`. Вони не є звітами Lighthouse або повного WCAG-аудиту.
+
+## Інтерактивна демонстрація
+
+На сторінці кейса `#interactive-demo` можна пройти вигадану заявку до локальної демо-CRM. Реальні форми, CRM і пошта з цього блоку не викликаються. Компонент і перевірена формула: `src/components/LeadFlowDemo.tsx`; контрольні приклади: `scripts/check-build.mjs`; UI-сценарії: `scripts/browser-smoke.mjs`. Тарифи — знімок навчального проєкту, не пропозиція клінінгових послуг.
+
+Звіт цього проходу та обмеження: `IMPROVEMENTS.md`, `reports/interactive-local.json`.

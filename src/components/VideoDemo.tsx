@@ -15,7 +15,7 @@ export default function VideoDemo() {
     <div><h3>Демонстрація LeadFlow</h3>
       <p>Ролик ще готується. Вже зараз можна пройти етапи обробки заявки або відкрити навчальну форму.</p>
       <div className="demo-alternatives">
-        <a href="#workflow">Переглянути інтерактивну демонстрацію</a>
+        <a href="#interactive-demo">Переглянути інтерактивну демонстрацію</a>
         <a href={site.formUrl} target="_blank" rel="noopener noreferrer">Відкрити навчальну форму</a>
       </div>
       <p>Форма навчальна: використовуйте лише вигадані дані. Надсилання не бронює прибирання.</p>
