@@ -37,11 +37,14 @@ for (const [path, title, description] of routes) {
   html = setMeta(html, "og:title", title);
   html = setMeta(html, "og:description", description);
   html = setMeta(html, "og:image", `${siteRoot}/og-cover.png`);
+  html = setMeta(html, "twitter:title", title);
+  html = setMeta(html, "twitter:description", description);
+  html = setMeta(html, "twitter:image", `${siteRoot}/og-cover.png`);
   html = html
     .replace('content="/og-cover.png"', `content="${site.origin}/og-cover.png"`)
     .replace(
       "</head>",
-      `${canonical ? `<link rel="canonical" href="${canonical}"/><meta property="og:url" content="${canonical}"/>` : ""}<meta name="robots" content="${site.indexable ? "index,follow" : "noindex,nofollow"}"/></head>`,
+      `${canonical ? `<link rel="canonical" href="${canonical}"/><meta property="og:url" content="${canonical}"/>` : ""}<meta name="robots" content="${site.indexable && path !== "/404" ? "index,follow" : "noindex,nofollow"}"/></head>`,
     );
   // Flat HTML gives clean routes a real file, rather than an SPA fallback to home.
   const file =
