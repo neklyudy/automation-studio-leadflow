@@ -30,6 +30,7 @@ import {
 } from "./components/UI";
 
 import VideoDemo from "./components/VideoDemo";
+import LeadFlowDemo from "./components/LeadFlowDemo";
 const loadMotion = () => import("./motion-features").then(module => module.default);
 
 function Contact() {
@@ -145,9 +146,9 @@ function Home() {
             </h1>
             <p>{copy.hero.description}</p>
             <div className="button-row">
-              <Button href="#projects">Переглянути проєкти</Button>
+              <Button href="/projects/leadflow/#interactive-demo">Спробувати LeadFlow</Button>
               <Button href="#contact" secondary>
-                Зв’язатися зі мною
+                Обговорити мою задачу
               </Button>
             </div>
             <div className="hero-note">
@@ -384,7 +385,7 @@ function LeadFlow() {
                 ))}
               </div>
               <div className="button-row">
-                <Button href="#demo">Переглянути систему</Button>
+                <Button href="#interactive-demo">Спробувати обробку заявки</Button>
                 <Button href="#workflow" secondary>
                   Як це працює
                 </Button>
@@ -445,6 +446,21 @@ function LeadFlow() {
               ))}
             </div>
           </div>
+        </section>
+        <section className="section container comparison-section" aria-labelledby="comparison-title">
+          <span className="eyebrow">Що змінює автоматизація</span>
+          <h2 id="comparison-title">Ті самі завдання. Зрозуміліший процес.</h2>
+          <p className="comparison-intro">Порівняння дій у ручному процесі та навчальному LeadFlow. Час і фінансовий ефект не вимірювалися.</p>
+          <div className="process-comparison">
+            <div className="comparison-header" aria-hidden="true"><span>Етап</span><span>Вручну</span><span>З LeadFlow</span></div>
+            {[
+              ["Приймання", "Переписати дані звернення в таблицю.", "Відповідь форми потрапляє до обробки й отримує номер."],
+              ["Перевірка", "Самостійно помітити помилку або повтор.", "Помилки та можливі дублікати позначено для менеджера."],
+              ["Вартість", "Звірити тариф і підрахувати доплати.", "Попередня ціна розраховується за налаштованими правилами."],
+              ["Наступна дія", "Переглянути всі записи й визначити пріоритет.", "Сповіщення та панель показують заявки, що потребують уваги."],
+            ].map(([stage, manual, automated]) => <article className="comparison-row" key={stage}><h3>{stage}</h3><p><span>Вручну</span>{manual}</p><p><span>З LeadFlow</span>{automated}</p></article>)}
+          </div>
+          <p className="comparison-note">Менеджер і далі уточнює дані, перевіряє можливі повтори та ухвалює рішення про підтвердження.</p>
         </section>
         <section className="section container solution-section">
           <span className="eyebrow">Рішення</span>
@@ -521,7 +537,7 @@ function LeadFlow() {
               <div>
                 <strong>25</strong>
                 <h3>email-сповіщень отримано</h3>
-                <p>Отримання підтверджено в Gmail.</p>
+                <p>Отримання підтверджено в Gmail після виправлення й повторної обробки.</p>
               </div>
             </div>
             <div className="check-list">
@@ -559,7 +575,7 @@ function LeadFlow() {
                 <SectionHeading
                   eyebrow="Спробуйте самі"
                   title="Від ідеї — до робочої системи."
-                  text="Відкрийте форму або перегляньте інтерактивну схему обробки заявки."
+                  text="Змініть параметри вигаданої заявки й пройдіть перевірку, розрахунок, сповіщення та запис у демо-CRM."
                 />
                 <p className="demo-warning">
                   <ShieldCheck size={17} /> Форма навчальна. Використовуйте лише вигадані ім’я, контакт і адресу. Надсилання не бронює прибирання.
@@ -570,7 +586,7 @@ function LeadFlow() {
                   Відкрити форму заявки
                 </Button>
                 <Button
-                  href={site.demoCrmUrl || "#workflow"}
+                  href={site.demoCrmUrl || "#interactive-demo"}
                   external={!!site.demoCrmUrl}
                   secondary
                 >
@@ -578,6 +594,7 @@ function LeadFlow() {
                 </Button>
               </div>
             </div>
+            <LeadFlowDemo />
             <VideoDemo />
           </div>
         </section>
