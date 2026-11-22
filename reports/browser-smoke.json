@@ -1,0 +1,135 @@
+{
+  "responsive": [
+    {
+      "page": "home",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 305,
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "page": "home",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 360,
+      "overflow": false,
+      "width": 375
+    },
+    {
+      "page": "home",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 375,
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "page": "home",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 753,
+      "overflow": false,
+      "width": 768
+    },
+    {
+      "page": "home",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 1009,
+      "overflow": false,
+      "width": 1024
+    },
+    {
+      "page": "home",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 1425,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "page": "home",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 1905,
+      "overflow": false,
+      "width": 1920
+    },
+    {
+      "page": "leadflow",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 305,
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "page": "leadflow",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 360,
+      "overflow": false,
+      "width": 375
+    },
+    {
+      "page": "leadflow",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 375,
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "page": "leadflow",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 753,
+      "overflow": false,
+      "width": 768
+    },
+    {
+      "page": "leadflow",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 1009,
+      "overflow": false,
+      "width": 1024
+    },
+    {
+      "page": "leadflow",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 1425,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "page": "leadflow",
+      "clipped": [],
+      "h1": 1,
+      "invalidControls": 0,
+      "layoutWidth": 1905,
+      "overflow": false,
+      "width": 1920
+    }
+  ],
+  "menu": true,
+  "workflowKeyboard": true,
+  "gallery": true,
+  "focusReturn": true,
+  "contactNavigation": true
+}
