@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import {
   Bell,
   Calculator,
@@ -15,7 +15,6 @@ import {
   LockKeyhole,
   Menu,
   MonitorPlay,
-  Play,
   Settings2,
   ShieldCheck,
   Sparkles,
@@ -97,7 +96,7 @@ export function Reveal({
 }) {
   const reduced = useReducedMotion();
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={false}
       whileInView={reduced ? {} : { y: [8, 0] }}
@@ -105,7 +104,7 @@ export function Reveal({
       transition={{ duration: 0.5 }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 export function SectionHeading({
@@ -237,7 +236,7 @@ export function FlowDiagram({
               onClick={() => setActive(i)}
               onKeyDown={(e) => {
                 if (
-                  ["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)
+                  ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)
                 ) {
                   e.preventDefault();
                   const next =
@@ -245,7 +244,7 @@ export function FlowDiagram({
                       ? 0
                       : e.key === "End"
                         ? 3
-                        : (active + (e.key === "ArrowRight" ? 1 : 3)) % 4;
+                        : (active + (["ArrowRight", "ArrowDown"].includes(e.key) ? 1 : 3)) % 4;
                   setActive(next);
                   document.getElementById(`flow-tab-${next}`)?.focus();
                 }
@@ -272,31 +271,33 @@ export function FlowDiagram({
         )}
       </div>
       {interactive ? (
-        <div
+        workflow.map((step, index) => <div
+          key={step.short}
+          hidden={active !== index}
           className="flow-detail"
           role="tabpanel"
-          id={`flow-panel-${active}`}
-          aria-labelledby={`flow-tab-${active}`}
+          id={`flow-panel-${index}`}
+          aria-labelledby={`flow-tab-${index}`}
           tabIndex={0}
         >
           <div>
-            <span className="eyebrow">{workflow[active].detail}</span>
-            <h3>{workflow[active].title}</h3>
-            <p>{workflow[active].text}</p>
+            <span className="eyebrow">{step.detail}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
           </div>
           <div
             className="demo-record"
             aria-label="Ілюстрація на вигаданих даних"
           >
             <small>ПРИКЛАД · ВИГАДАНІ ДАНІ</small>
-            {workflow[active].fields.map((f) => (
+            {step.fields.map((f) => (
               <span key={f}>
                 <Check size={14} aria-hidden="true" />
                 {f}
               </span>
             ))}
           </div>
-        </div>
+        </div>)
       ) : (
         <div className="flow-summary">
           <span className="signal" />
@@ -365,6 +366,8 @@ export function Footer() {
 }
 export function Gallery({ items }: { items: GalleryItem[] }) {
   const [selected, setSelected] = useState<number | null>(null);
+  const [zoomed, setZoomed] = useState(false);
+  const isOpen = selected !== null;
   const dialog = useRef<HTMLDialogElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
@@ -379,10 +382,11 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
       document.body.style.overflow = original;
       lastFocus.current?.focus();
     };
-  }, [selected]);
+  }, [isOpen]);
   function close() {
     dialog.current?.close();
     setSelected(null);
+    setZoomed(false);
   }
   function move(offset: number) {
     if (selected === null) return;
@@ -390,6 +394,7 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
     while (!items[next].src)
       next = (next + offset + items.length) % items.length;
     setSelected(next);
+    setZoomed(false);
   }
   const current = selected === null ? null : items[selected];
   return (
@@ -410,6 +415,7 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
                   src={localUrl(item.src)}
                   alt={item.alt}
                   loading="lazy"
+                  decoding="async"
                   width="1200"
                   height="700"
                 />
@@ -460,7 +466,8 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
                 <X />
               </button>
             </div>
-            <img src={localUrl(current.src)} alt={current.alt} />
+            <div className={`lightbox-canvas ${zoomed ? "is-zoomed" : ""}`}><img src={localUrl(current.src)} alt={current.alt} /></div>
+            <button className="zoom-control" onClick={() => setZoomed(!zoomed)} aria-pressed={zoomed}>{zoomed ? "Умістити зображення" : "Збільшити зображення"}</button>
             <div className="lightbox-bottom">
               <button
                 className="icon-button"
@@ -482,32 +489,5 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
         )}
       </dialog>
     </>
-  );
-}
-export function VideoDemo() {
-  return site.demoVideoUrl ? (
-    <video className="demo-video" controls preload="metadata">
-      <source src={localUrl(site.demoVideoUrl)} />
-      <track
-        kind="captions"
-        src={localUrl("/projects/leadflow/captions.vtt")}
-        srcLang="uk"
-        label="Українська"
-      />
-      Ваш браузер не підтримує відео.
-    </video>
-  ) : (
-    <div className="video-placeholder">
-      <div className="video-icon">
-        <Play size={28} aria-hidden="true" />
-      </div>
-      <div>
-        <h3>Демонстраційний ролик</h3>
-        <p>
-          Відео ще не додано. Перегляньте інтерактивну схему вище або відкрийте навчальну форму.
-        </p>
-      </div>
-      <span className="pill">Незабаром у кейсі</span>
-    </div>
   );
 }
