@@ -18,6 +18,8 @@
   --blue: #477bff;
   --light: #f0f3f8;
   --ink: #15213a;
+  --ease-soft: cubic-bezier(.22, 1, .36, 1);
+  --ease-ui: cubic-bezier(.4, 0, .2, 1);
 }
 * {
   box-sizing: border-box;
@@ -156,9 +158,9 @@ svg {
   border: 1px solid transparent;
   border-radius: 7px;
   transition:
-    background 0.2s,
-    transform 0.2s,
-    border-color 0.2s;
+    background-color .28s var(--ease-ui),
+    transform .32s var(--ease-soft),
+    border-color .28s var(--ease-ui);
   white-space: normal;
   text-align: center;
 }
@@ -222,8 +224,9 @@ svg {
   border-bottom: 1px solid #ffffff08;
   backdrop-filter: blur(18px);
   transition:
-    height 0.25s,
-    background 0.25s;
+    height .35s var(--ease-soft),
+    background-color .35s var(--ease-ui),
+    border-color .35s var(--ease-ui);
 }
 .header-scrolled {
   height: 74px;
@@ -282,7 +285,7 @@ svg {
   font-size: 0.8125rem;
   font-weight: 550;
   color: #aab5ca;
-  transition: color 0.2s;
+  transition: color .28s var(--ease-ui);
 }
 .nav a:hover {
   color: white;
@@ -362,7 +365,7 @@ svg {
   margin-right: 40px;
   position: relative;
   box-shadow: 0 12px 36px #0002;
-  animation: arrive 0.7s ease-out both;
+  animation: arrive .8s var(--ease-soft) both;
 }
 .soft-icon {
   width: 46px;
@@ -415,7 +418,7 @@ svg {
   top: 12px;
   background: #98b7ff;
   border-radius: 50%;
-  animation: travel 2.8s ease-in-out infinite;
+  animation: travel 3.6s var(--ease-ui) infinite;
 }
 .processing-card {
   position: relative;
@@ -425,7 +428,7 @@ svg {
   border-radius: 11px;
   margin-left: 20px;
   box-shadow: 0 25px 70px #0003;
-  animation: arrive 0.7s 0.15s ease-out both;
+  animation: arrive .8s .1s var(--ease-soft) both;
 }
 .processing-brand {
   display: flex;
@@ -503,7 +506,7 @@ svg {
   gap: 12px;
   margin-top: 20px;
   margin-left: 20px;
-  animation: arrive 0.7s 0.3s ease-out both;
+  animation: arrive .8s .2s var(--ease-soft) both;
 }
 .result-row > div {
   flex: 1;
@@ -569,12 +572,10 @@ svg {
   border-top: 1px solid #34425f;
   padding: 27px 20px 27px 0;
   transition:
-    border-color 0.25s,
-    transform 0.25s;
+    border-color .32s var(--ease-ui);
 }
 .service-card:hover {
   border-color: #6d95ff;
-  transform: translateY(-4px);
 }
 .service-icon {
   color: #799cf9;
@@ -711,7 +712,7 @@ svg {
   overflow: hidden;
   box-shadow: 0 35px 70px #0004;
   transform: perspective(1400px) rotateY(-5deg) rotateX(2deg);
-  transition: transform 0.4s;
+  transition: transform .65s var(--ease-soft);
 }
 .project-preview-link:hover .project-preview {
   transform: perspective(1400px) rotateY(-1deg) rotateX(0);
@@ -1470,7 +1471,7 @@ svg {
   height: 260px;
   object-fit: cover;
   object-position: top;
-  transition: transform 0.35s;
+  transition: transform .5s var(--ease-soft);
 }
 .gallery-image:hover img {
   transform: scale(1.025);
@@ -1681,7 +1682,7 @@ svg {
 @keyframes arrive {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -2763,7 +2764,9 @@ svg {
     transform: none;
   }
   .button:hover,
-  .service-card:hover {
+  .service-card:hover,
+  .project-preview-link:hover .project-preview,
+  .gallery-image:hover img {
     transform: none;
   }
 }
@@ -2969,4 +2972,23 @@ h2, .section-heading h2, .solution-section h2, .case-conclusion h2 { font-size: 
   .demo-input-row { grid-template-columns: 1fr; }
   .demo-price > div { flex-wrap: wrap; gap: .25rem; }
   .demo-actions .button { width: 100%; }
+}
+
+/* Consistent, restrained motion. Focus outlines remain immediate. */
+.icon-button, .header-cta, .zoom-control, .flow-node .node-icon {
+  transition: background-color .28s var(--ease-ui), border-color .28s var(--ease-ui), color .28s var(--ease-ui);
+}
+@keyframes panel-enter {
+  from { opacity: .65; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .flow-detail:not([hidden]), .demo-message, .demo-crm { animation: panel-enter .3s var(--ease-soft) both; }
+  .lightbox[open] { animation: panel-enter .26s var(--ease-soft) both; }
+}
+@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .nav-open { animation: panel-enter .28s var(--ease-soft) both; }
+}
+@media (hover: none) {
+  .button:hover, .project-preview-link:hover .project-preview, .gallery-image:hover img { transform: none; }
 }
