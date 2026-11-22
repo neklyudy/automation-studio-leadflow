@@ -27,7 +27,7 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
       - name: Check content and build
-        run: pnpm check && pnpm build
+        run: pnpm check && pnpm lint && pnpm build && pnpm check:build
         env:
           GITHUB_PAGES: 'true'
           VITE_GITHUB_PAGES: 'true'
