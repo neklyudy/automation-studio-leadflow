@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import {
   Check,
   CheckCircle2,
-  Code2,
   FileInput,
   LayoutDashboard,
   ShieldCheck,
   Workflow,
 } from "lucide-react";
-import { MotionConfig } from "motion/react";
+import { LazyMotion, MotionConfig } from "motion/react";
 import { site, services, copy } from "./config/site";
 import { appPath, localUrl } from "./config/paths";
 import {
@@ -28,8 +27,10 @@ import {
   FlowDiagram,
   Gallery,
   ContactLinks,
-  VideoDemo,
 } from "./components/UI";
+
+import VideoDemo from "./components/VideoDemo";
+const loadMotion = () => import("./motion-features").then(module => module.default);
 
 function Contact() {
   return (
@@ -150,7 +151,7 @@ function Home() {
               </Button>
             </div>
             <div className="hero-note">
-              <CheckCircle2 size={17} /> Від конкретного завдання — до робочої системи
+              <CheckCircle2 size={17} /> Рішення під конкретні бізнес-процеси
             </div>
           </div>
           <div className="hero-visual">
@@ -224,12 +225,12 @@ function Home() {
         </div>
         <section id="services" className="section container">
           <SectionHeading
-            eyebrow="Що я автоматизую"
-            title="Рутина повторюється. Рішення — працює."
-            text="Допомагаю поєднати окремі дії в послідовний і зрозумілий процес."
+            eyebrow="Як я можу допомогти вашому бізнесу"
+            title="Менше ручної роботи. Більше порядку в процесах."
+            text="Допомагаю автоматизувати повторювані завдання без зайвої складності."
           />
           <div className="services-grid">
-            {services.map((s, i) => (
+            {services.map((s) => (
               <Reveal key={s.title} className="service-card">
                 <span className="service-icon">
                   <Icon name={s.icon} size={27} />
@@ -237,12 +238,13 @@ function Home() {
                 <h3>{s.title}</h3>
                 <p>{s.text}</p>
                 <span className="service-note">
-                  {i === 3 && <span className="dev-label">У розвитку</span>}
+
                   {s.note}
                 </span>
               </Reveal>
             ))}
           </div>
+          <div className="section-cta"><Button href="#contact" secondary>Обговорити автоматизацію мого бізнесу</Button></div>
         </section>
         <section id="projects" className="section projects-section">
           <div className="container">
@@ -318,7 +320,7 @@ function Home() {
                 />
               ) : (
                 <>
-                  <Code2 size={80} strokeWidth={0.8} />
+                  <span className="author-initials" aria-hidden="true">ОН</span>
                   <span>
                     Створюю. Перевіряю.
                     <br />
@@ -337,6 +339,7 @@ function Home() {
               />
               <p className="about-intro">{copy.about.text}</p>
               <p className="about-detail">{copy.about.detail}</p>
+              <div className="personal-approach"><h3>Мій підхід</h3><ol>{["Зрозуміти проблему", "Спроєктувати рішення", "Реалізувати автоматизацію", "Перевірити результат"].map(item => <li key={item}>{item}</li>)}</ol></div>
               <div className="about-values">
                 <span>
                   <ShieldCheck size={19} /> Перевірена логіка
@@ -529,6 +532,7 @@ function LeadFlow() {
                 </span>
               ))}
             </div>
+            <p className="test-disclosure">Тестування проводилося на вигаданих даних. Результати демонструють роботу навчального прототипу, а не показники комерційного впровадження.</p>
             <details className="test-details">
               <summary>Що показав навантажувальний тест</summary>
               <p>
@@ -544,7 +548,7 @@ function LeadFlow() {
           <SectionHeading
             eyebrow="Інтерфейс системи"
             title="Подивіться, як це виглядає."
-            text="Справжні екрани навчального проєкту. Службові елементи облікових записів вилучено з кадрів."
+            text="Справжні екрани навчального проєкту з українськими підписами. Інтерфейс прототипу на знімках російською; зображення збережено без перекладу. Службові елементи облікових записів вилучено з кадрів."
           />
           <Gallery items={gallery} />
         </section>
@@ -608,6 +612,7 @@ function LeadFlow() {
             ))}
           </div>
         </section>
+        <section className="section container suitability"><SectionHeading eyebrow="Від демонстрації до вашої задачі" title="Чи підійде подібне рішення вашому бізнесу?" text="Підхід може бути корисним сервісним компаніям, які регулярно отримують заявки, розраховують вартість послуг і відстежують виконання замовлень." /><p>Перед впровадженням потрібно узгодити тарифи, джерела заявок, ролі менеджерів і правила перевірки даних. LeadFlow показує основу процесу; адаптація до вашого бізнесу потребує окремого опрацювання.</p><Button href="/#contact">Обговорити мою задачу</Button></section>
         <section className="section case-conclusion container">
           <span className="eyebrow">Підсумок проєкту</span>
           <h2>
@@ -657,11 +662,11 @@ export default function App({
         : "Сторінку не знайдено | Automation Studio";
   }, [isCase, cleaned]);
   return (
-    <MotionConfig reducedMotion="user">
+    <LazyMotion features={loadMotion} strict><MotionConfig reducedMotion="user">
       <a className="skip-link" href="#main">
         Перейти до вмісту
       </a>
       {cleaned === "/" ? <Home /> : isCase ? <LeadFlow /> : <NotFound />}
-    </MotionConfig>
+    </MotionConfig></LazyMotion>
   );
 }
