@@ -99,9 +99,9 @@ export function Reveal({
     <m.div
       className={className}
       initial={false}
-      whileInView={reduced ? {} : { y: [8, 0] }}
+      whileInView={reduced ? {} : { y: [6, 0] }}
       viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </m.div>
